@@ -1,0 +1,11 @@
+Target reference notes used by v7:
+
+Player -> BaseData pointer: +0x160, fallback +0x150
+BaseData nickname: +0x18
+BaseData UID-like: +0x110, fallback +0x38
+BaseData display ID: +0x188
+Player faction: +0x128, fallback +0x1EC
+Player role/career: +0x24C
+Player UnitId fallback: +0x110
+GooseGame players dictionary: GooseGame +0x40
+GameSystems list fallback: GameSystems +0x40
