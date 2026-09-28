@@ -1,0 +1,36 @@
+Checked against supplied target reference files.
+
+Bundle ID: com.seayoo.ggd
+Version: 1.1.13
+CFBundleVersion: 8
+MinimumOSVersion: 18.0
+UnityFramework: Mach-O 64-bit arm64 dynamically linked shared library
+UnityFramework size: 112,885,824 bytes
+Global metadata size: 14,162,792 bytes
+
+Observed exported IL2CPP symbols in supplied UnityFramework include:
+_il2cpp_domain_get
+_il2cpp_domain_get_assemblies
+_il2cpp_thread_attach
+_il2cpp_class_from_name
+_il2cpp_class_get_method_from_name
+_il2cpp_field_get_value
+_il2cpp_runtime_invoke
+_il2cpp_string_length
+_il2cpp_string_chars
+
+Reference plugin strings also contain:
+Goose.GooseGame
+GooseGame.players
+Goose.Guidance.Tutorial
+<Game>k__BackingField
+Adam.Gameplay.App
+game
+PlayerRoleDisplayCtl
+GameMeetingCtl
+WatchBattleCtl
+GooseBaseData
+UGCBaseData
+CareerRef
+
+v5 does not reuse the old plugin's executable code and does not hard-code player object offsets.
