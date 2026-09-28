@@ -1,0 +1,58 @@
+name: Build GGD Identity Overlay v7 Complete
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show Apple toolchain
+        run: |
+          xcodebuild -version
+          xcrun --sdk iphoneos --show-sdk-path
+          xcrun --sdk iphoneos clang --version
+
+      - name: Build arm64 iOS dylib
+        shell: bash
+        run: |
+          set -euo pipefail
+          SDKROOT="$(xcrun --sdk iphoneos --show-sdk-path)"
+          CLANG="$(xcrun --sdk iphoneos -f clang++)"
+          OUT="$GITHUB_WORKSPACE/dist"
+          mkdir -p "$OUT"
+
+          "$CLANG" \
+            -x objective-c++ \
+            -arch arm64 \
+            -isysroot "$SDKROOT" \
+            -miphoneos-version-min=18.0 \
+            -std=c++17 \
+            -fobjc-arc \
+            -fPIC \
+            -dynamiclib \
+            -O2 \
+            -Wno-deprecated-declarations \
+            -Wno-unused-parameter \
+            -Wl,-no_implicit_dylibs \
+            -Wl,-install_name,@rpath/GGDIdentityOverlay.dylib \
+            -framework Foundation \
+            -framework UIKit \
+            -framework QuartzCore \
+            GGDFinal.mm \
+            -o "$OUT/GGDIdentityOverlay.dylib"
+
+          file "$OUT/GGDIdentityOverlay.dylib"
+          xcrun --sdk iphoneos otool -hv "$OUT/GGDIdentityOverlay.dylib"
+          xcrun --sdk iphoneos otool -L "$OUT/GGDIdentityOverlay.dylib"
+          ls -lh "$OUT/GGDIdentityOverlay.dylib"
+
+      - name: Package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: GGDIdentityOverlay-v7-complete-arm64
+          path: dist/GGDIdentityOverlay.dylib
